@@ -1,6 +1,6 @@
 # Security Server Sidecar User Guide <!-- omit in toc -->
 
-Version: 1.16  
+Version: 1.12  
 Doc. ID: UG-SS-SIDECAR
 
 ## Version history <!-- omit in toc -->
@@ -20,10 +20,6 @@ Doc. ID: UG-SS-SIDECAR
 | 06.07.2023 | 1.10    | Sidecar repo migration                                  | Eneli Reimets             |
 | 22.02.2024 | 1.11    | Local database files mapping with docker volume         | Eneli Reimets             |
 | 13.05.2024 | 1.12    | Add additional upgrade details for Sidecar 7.5          | Ovidijus Narkevicius      |
-| 22.08.2024 | 1.13    | Add a section about enabling ACME support               | Eneli Reimets             |
-| 23.09.2024 | 1.14    | Changing System Parameter Values in Configuration Files | Eneli Reimets             |
-| 23.12.2024 | 1.15    | Minor documentation updates                             | Eneli Reimets             |
-| 18.02.2025 | 1.16    | Configuring memory allocation fo proxy service          | Ovidijus Narkevičius      |
 
 ## License
 
@@ -50,47 +46,42 @@ To view a copy of this license, visit <https://creativecommons.org/licenses/by-s
   * [2.8 Automatic backups](#28-automatic-backups)
   * [2.9 Message log archives](#29-message-log-archives)
 * [3 Initial configuration](#3-initial-configuration)
-  * [3.1 Changing the System Parameter Values in Configuration Files](#31-changing-the-system-parameter-values-in-configuration-files)
-  * [3.2 Enabling ACME Support](#32-enabling-acme-support)
-  * [3.3 Configuring the memory allocation for the Proxy Service](#33-configuring-the-memory-allocation-for-the-proxy-service)
 * [4 Upgrading](#4-upgrading)
   * [4.1 Upgrading from version 6.26.0 to 7.0.0](#41-upgrading-from-version-6260-to-700)
-  * [4.2 Upgrading from version 7.4.2 to 7.5.x with local database](#42-Upgrading-from-version-742-to-75x-with-local-database)
 * [5 High Availability Setup](#5-high-availability-setup)
 
 <!-- vim-markdown-toc -->
 
 ## 1 Introduction
 
-X-Road Security Server Sidecar is containerized, production ready, version of the X-Road Security Server. This document describes the installation and maintenance of the Sidecar, to the extent it differs from the X-Road Security Server for Ubuntu server. For additional details, see [IG-SS](#Ref_IG-SS) and [UG-SS](#Ref_UG-SS).
+X-Road Security Server Sidecar is containerized, production ready, version of the X-Road Security Server. This document describes the installation and maintenance of the Sidecar, to the extent it differs from the X-Road Security Server for Ubuntu server. For additional details, see [IG-SS](#Ref_IG-SS) and [UG-SS](#Ref_UG_SS).
 
 ### 1.1 X-Road Security Server Sidecar images
 
 The Security Server Sidecar has several images with alternative configurations:
 
-| **Image**                                                     | **Description**                                                                                              |
-|---------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| niis/xroad-security-server-sidecar:\<version>-slim            | Slim image with the minimum required packages and configuration to function.                                 |
-| niis/xroad-security-server-sidecar:\<version>                 | Full image uses the slim as the base and adds message logging, and environmental and operational monitoring. |
-| niis/xroad-security-server-sidecar:\<version>-slim-\<variant> | Same as the slim image but with the NIIS member/partner country variant (ee,fi,fo,is) settings included.     |
-| niis/xroad-security-server-sidecar:\<version>-\<variant>      | Same as the full image but with the NIIS member/partner country variant configuration settings included.     |
+**Image**                                                    | **Description**
+------------------------------------------------------------ | -----------------------------------------------------------------------------------------------------------------
+niis/xroad-security-server-sidecar:\<version>-slim           | Slim image with the minimum required packages and configuration to function.
+niis/xroad-security-server-sidecar:\<version>                | Full image uses the slim as the base and adds message logging, and environmental and operational monitoring.
+niis/xroad-security-server-sidecar:\<version>-slim-\<variant>| Same as the slim image but with the NIIS member/partner country variant (ee,fi,fo,is) settings included.
+niis/xroad-security-server-sidecar:\<version>-\<variant>     | Same as the full image but with the NIIS member/partner country variant configuration settings included.
 
 All images can act as a provider or consumer Security Server. The images with a country code suffix (e.g., `-fi`) include NIIS member/partner -specific configuration.
 
-| **Feature**              | **Sidecar** | **Sidecar Slim** |
-|--------------------------|-------------|------------------|
-| Consume services         | Yes         | Yes              |
-| Provide services         | Yes         | Yes              |
-| Message logging          | Yes         | No               |
-| Environmental monitoring | Yes         | No               |
-| Operational monitoring   | Yes         | No               |
+**Feature**                      | **Sidecar** | **Sidecar Slim** |
+---------------------------------|-------------|------------------|
+Consume services                 | Yes         | Yes              |
+Provide services                 | Yes         | Yes              |
+Message logging                  | Yes         | No               |
+Environmental monitoring         | Yes         | No               |
+Operational monitoring           | Yes         | No               |
 
 ### 1.2 References
 
 1. <a id="Ref_IG-SS">[IG-SS]</a> [X-Road: Security Server Installation Guide](../Manuals/ig-ss_x-road_v6_security_server_installation_guide.md)
 2. <a id="Ref_IG-SS-Annex-D">[IG-SS-Annex-D]</a> [X-Road: Security Server Installation Guide](../Manuals/ig-ss_x-road_v6_security_server_installation_guide.md#annex-d-create-database-structure-manually)
 3. <a id="Ref_UG-SS">[UG-SS]</a> [X-Road: Security Server User Guide](../Manuals/ug-ss_x-road_6_security_server_user_guide.md)
-4. <a id="Ref_UG-SYSPAR">[UG-SYSPAR]</a> [X-Road: System Parameters User Guide](../Manuals/ug-syspar_x-road_v6_system_parameters.md)
 
 ## 2 Installation
 
@@ -108,41 +99,38 @@ Minimum container resource limits for running the Security Server Sidecar contai
 
 The following parameters are used in example commands:
 
-| **Value**                           | **Explanation**                                                                                                                   |
-|-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| \<container name>                   | Name of the Security Server Sidecar container                                                                                     |
-| \<admin port>                       | Port for admin user interface (default 4000)                                                                                      |
-| \<healthcheck port>                 | Port for service health check (default 5588)                                                                                      |
-| \<consumer information system port> | Consumer information system port (default 8080 (http), 8443 (https))                                                              |
-| \<token pin>                        | Software token PIN code                                                                                                           |
-| \<admin user>                       | Admin username                                                                                                                    |
-| \<admin password>                   | Admin password                                                                                                                    |
-| \<database host>                    | (Optional) host for external database                                                                                             |
-| \<database port>                    | (Optional) port for external database, default 5432                                                                               |
-| \<database password>                | (Optional) External database super user password                                                                                  |
-| \<log level>                        | (Optional) Logging level, one of: TRACE, DEBUG, INFO, WARN, ERROR, ALL or OFF                                                     |
-| \<database name>                    | (Optional) Database name prefix ('serverconf' becomes '\<database-name>\_serverconf'), useful when using a shared database server |
-| \<config volume name>               | Name of the configuration volume                                                                                                  |
-| \<database volume name>             | Name of the local database volume                                                                                                 |
-| \<archive volume name>              | Name of the archive/backup volume                                                                                                 |
+| **Value**                           | **Explanation**
+|-------------------------------------| ----------------------------------------------------------
+| \<container name>                   | Name of the Security Server Sidecar container
+| \<admin port>                       | Port for admin user interface (default 4000)
+| \<healthcheck port>                 | Port for service health check (default 5588)
+| \<consumer information system port> | Consumer information system port (default 8080 (http), 8443 (https))
+| \<token pin>                        | Software token PIN code
+| \<admin user>                       | Admin username
+| \<admin password>                   | Admin password
+| \<database host>                    | (Optional) host for external database
+| \<database port>                    | (Optional) port for external database, default 5432
+| \<database password>                | (Optional) External database super user password
+| \<log level>                        | (Optional) Logging level, one of: TRACE, DEBUG, INFO, WARN, ERROR, ALL or OFF
+| \<database name>                    | (Optional) Database name prefix ('serverconf' becomes '\<database-name>\_serverconf'), useful when using a shared database server
+| \<config volume name>               | Name of the configuration volume
+| \<database volume name>             | Name of the local database volume
+| \<archive volume name>              | Name of the archive/backup volume
 
 ### 2.3 Network
 
 The table below lists the required connections between different components.
 
-| Connection | Source                      | Target                      | Target Ports     | Protocol | Note                    |
-|------------|-----------------------------|-----------------------------|------------------|----------|-------------------------|
-| Inbound    | Other Security Servers      | Sidecar                     | 5500, 5577       | tcp      |                         |
-| Inbound    | Consumer Information System | Sidecar                     | 8080, 8443       | tcp      | From "internal" network |
-| Inbound    | Admin                       | Sidecar                     | 4000             | https    | From "internal" network |
-| Inbound    | ACME Server                 | Sidecar                     | 80               | http     |                         |
-| Outbound   | Sidecar                     | Central Server              | 80, 443, 4001    | http(s)  |                         |
-| Outbound   | Sidecar                     | OCSP Service                | 80 / 443 / other | http(s)  |                         |
-| Outbound   | Sidecar                     | Timestamping Service        | 80 / 443 / other | http(s)  | Not used by *slim*      |
-| Outbound   | Sidecar                     | Other Security Server(s)    | 5500, 5577       | tcp      |                         |
-| Outbound   | Sidecar                     | Producer Information System | 80, 443, other   | http(s)  | To "internal" network   |
-| Outbound   | Sidecar                     | ACME Server                 | 80 / 443         | http(s)  |                         |
-| Outbound   | Sidecar                     | Mail server                 | 587              | tcp      |                         |
+| Connection | Source                      | Target                       | Target Ports     | Protocol     | Note                    |
+-------------|-----------------------------|------------------------------|------------------|--------------|-------------------------|
+| Inbound    | Other Security Servers      | Sidecar                      | 5500, 5577       | tcp          |                         |
+| Inbound    | Consumer Information System | Sidecar                      | 8080, 8443       | tcp          | From "internal" network |
+| Inbound    | Admin                       | Sidecar                      | 4000             | https        | From "internal" network |
+| Outbound   | Sidecar                     | Central Server               | 80, 4001         | http(s)      |                         |
+| Outbound   | Sidecar                     | OCSP Service                 | 80 / 443 / other | http(s)      |                         |
+| Outbound   | Sidecar                     | Timestamping Service         | 80 / 443 / other | http(s)      | Not used by *slim*      |
+| Outbound   | Sidecar                     | Other Security Server(s)     | 5500, 5577       | tcp          |                         |
+| Outbound   | Sidecar                     | Producer Information System  | 80, 443, other   | http(s)      | To "internal" network   |
 
 Notes:
 * Using a firewall to protect the Security Server is recommended. The firewall can be applied to both incoming and outgoing connections, depending on the security requirements of the environment where the Security Server will be deployed.
@@ -169,11 +157,11 @@ docker run --detach \
   -e XROAD_TOKEN_PIN=<token pin> \
   -e XROAD_ADMIN_USER=<admin user> \
   -e XROAD_ADMIN_PASSWORD=<admin password> \
+  -e XROAD_LOG_LEVEL=INFO \
   # Optional parameters - BEGIN
   -v <config-volume>:/etc/xroad \
   -v <archive-volume>:/var/lib/xroad \
   -v <database-volume>:/var/lib/postgresql/16/main \
-  -e XROAD_LOG_LEVEL=INFO \
   -e XROAD_DB_HOST=<database-host> \
   -e XROAD_DB_PORT=<database-port> \
   -e XROAD_DB_PWD=<postgres password> \
@@ -197,16 +185,13 @@ In production use, either persistent volumes should be used. Using a separate da
 2. Ensure from the command line that the X-Road services are running in the container:
     ```bash
     docker exec -t <container name> supervisorctl status
-    cron                             RUNNING   pid 557, uptime 0:07:44
-    postgres                         RUNNING   pid 552, uptime 0:07:44
-    xroad-addon-messagelog           RUNNING   pid 558, uptime 0:07:44
-    xroad-autologin                  EXITED    Dec 19 01:18 PM
-    xroad-confclient                 RUNNING   pid 553, uptime 0:07:44
-    xroad-monitor                    RUNNING   pid 554, uptime 0:07:44
-    xroad-opmonitor                  RUNNING   pid 555, uptime 0:07:44
-    xroad-proxy                      RUNNING   pid 560, uptime 0:07:44
-    xroad-proxy-ui-api               RUNNING   pid 561, uptime 0:07:44
-    xroad-signer                     RUNNING   pid 556, uptime 0:07:44
+    xroad-autologin                  RUNNING    Nov 04 12:23 PM
+    xroad-confclient                 RUNNING   pid 468, uptime 0:15:55
+    xroad-monitor                    RUNNING   pid 471, uptime 0:15:55
+    xroad-opmonitor                  RUNNING   pid 470, uptime 0:15:55
+    xroad-proxy                      RUNNING   pid 473, uptime 0:15:55
+    xroad-proxy-ui-api               RUNNING   pid 476, uptime 0:15:55
+    xroad-signer                     RUNNING   pid 472, upt|ime 0:15:55
     ```
 
 3. Ensure that you can open the admin user interface URL `https://127.0.0.1:<admin port>` in a web browser. To log in, use the credentials you set during the installation (\<admin user>, \<admin password>). While the user interface is still starting up, the web browser may display a connection refused -error.
@@ -259,7 +244,7 @@ To change the database host, you need to:
 1. Edit db.properties inside the container
 
     ```bash
-    docker exec -it <sidecar container name> nano-tiny /etc/xroad/db.properties
+    docker exec -it <sidecar container name> nano /etc/xroad/db.properties
     ```
 2. Replace the connection host, the username and password with the properties of the new database:
 
@@ -312,7 +297,7 @@ It is recommended to configure persistent [storage](https://docs.docker.com/stor
 For example, to run sidecar using volumes for each mount point execute the following command:
 ```bash
 docker run --detach \
-  --name sss-7.6.0 \
+  --name sss-7.4.1 \
   -p 127.0.0.1:4170:4000 \
   -p 127.0.0.1:5588:5588 \
   -p 8443:8443 \
@@ -325,13 +310,13 @@ docker run --detach \
   -v sidecar_config_volume:/etc/xroad \
   -v sidecar_backup_volume:/var/lib/xroad \
   -v sidecar_db_volume:/var/lib/postgresql/16/main \
-  niis/xroad-security-server-sidecar:7.6.0
+  niis/xroad-security-server-sidecar:7.4.1
 ```
 
 ### 2.8 Automatic backups
 
-The Security Server backs up its configuration automatically once every day, by default. It can be changed with system parameter `proxy-configuration-backup-cron`, see UG-SYSPAR(#Ref_UG-SYSPAR) for configuration details. Backups older than 30 days are automatically removed from the server.
-If needed, you can adjust the automatic backup deletion policies by editing the `/etc/cron.d/xroad-proxy` file.
+The Security Server backs up its configuration automatically once every day, by default. Backups older than 30 days are automatically removed from the server.
+If needed, you can adjust the automatic backup policies by editing the `/etc/cron.d/xroad-proxy` file.
 
 Automatic backups will be stored in the folder `/var/lib/xroad/backup/`.
 
@@ -347,37 +332,17 @@ It is recommended to store the archives to a volume by adding a volume mapping f
 To configure the X-Road Security Server Sidecar, open a browser to `https://127.0.0.1:<admin port>` (assuming the container admin port 4000 is published to localhost) and log in using the admin credentials.
 See [IG-SS](#Ref_IG-SS) for configuration details.
 
-### 3.1 Changing the System Parameter Values in Configuration Files
-
-The configuration files are INI files [INI], where each section contains parameters for a particular server component.
-
-In order to override the default values of system parameters, create or edit the file
-
-	/etc/xroad/conf.d/local.ini
-
-See [UG-SYSPAR](#Ref_UG-SYSPAR) for configuration details.
-
-### 3.2 Enabling ACME Support
-
-Automated Certificate Management Environment (ACME) protocol enables partly automated certificate management of the authentication and sign
-certificates on the Security Server. More information about the required configuration is available in the [Security Server User Guide](../Manuals/ug-ss_x-road_6_security_server_user_guide.md#24-configuring-acme).
-
-### 3.3 Configuring the memory allocation for the Proxy Service
-
-The memory allocation for the Proxy Service can be configured using helper script `/usr/share/xroad/scripts/proxy_memory_helper.sh`. More information about the usage of this script is available in the [Security Server User Guide](../Manuals/ug-ss_x-road_6_security_server_user_guide.md#211-updating-proxy-services-memory-allocation-command-line-arguments).
-
-
 ## 4 Upgrading
 
 Upgrading to a new image is supported, provided that:
 
-* The new container image has the same or subsequent minor version of the X-Road Security Server.
+* The new container image has the same or subsequent minor version of the X-Road Security Server
   * As an exception, upgrading from 6.26.0 to 7.0.x is supported despite the major version change.
   * As an exception, upgrading from 7.4.2 to 7.5.x is supported using backup archive if local database is used.
-* A volume is used for `/etc/xroad`.
-* A remote database is used, or a volume is mapped to `/var/lib/postgresql/16/main`.
-* The `xroad.properties` file with `serverconf.database.admin_user` etc. credentials is either mapped to `/etc/xroad.properties` or present in `/etc/xroad/xroad.properties`.
-* The same image type (slim or full) and variant (ee, fi, ...) are used for the new container.
+* A volume is used for `/etc/xroad`
+* A remote database is used, or a volume is mapped to `/var/lib/postgresql/16/main`
+* The `xroad.properties` file with `serverconf.database.admin_user` etc. credentials is either mapped to `/etc/xroad.properties` or present in `/etc/xroad/xroad.properties`
+* The same image type (slim or full) and variant (ee, fi, ...) are used for the new container
 
 If the prerequisites are met, upgrading is straightforward:
 
@@ -430,11 +395,11 @@ In case the prerequisites are not fully met, it is possible to manually prepare 
   docker stop <container-name-temp>
   ```
 * Upgrade using the upgrade instructions above
-
+* 
 ### 4.2 Upgrading from version 7.4.2 to 7.5.x with local database
 
 Upgrading from 7.4.2 to 7.5.x is supported, if the above prerequisites are met. 
-However, due to a newer PostgreSQL version (16, previously 12) used in new sidecar image, it isn't straightforward to upgrade using the same database volume.
+However, due to a newer PostgreSQL version(16, previously 12) used in new sidecar image, it isn't straightforward to upgrade using the same database volume.
 
 * Create a backup for the current sidecar instance using UI or command line and download it.
 * Stop the old container and rename it.

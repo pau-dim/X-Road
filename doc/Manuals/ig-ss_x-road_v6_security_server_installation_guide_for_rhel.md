@@ -2,7 +2,7 @@
 
 **X-ROAD 7**
 
-Version: 1.34  
+Version: 1.29  
 Doc. ID: IG-SS-RHEL
 
 ---
@@ -10,44 +10,38 @@ Doc. ID: IG-SS-RHEL
 
 ## Version history <!-- omit in toc -->
 
-| Date       | Version | Description                                                                                                                                                                                                          | Author               |
-|------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
-| 25.10.2018 | 1.0     | Initial version                                                                                                                                                                                                      | Petteri Kivimäki     |
-| 16.11.2018 | 1.1     | Update link to Ubuntu installation guide                                                                                                                                                                             | Jarkko Hyöty         |
-| 28.01.2018 | 1.2     | Update port 2080 documentation                                                                                                                                                                                       | Petteri Kivimäki     |
-| 11.09.2019 | 1.3     | Remove Ubuntu 14.04 from supported platforms                                                                                                                                                                         | Jarkko Hyöty         |
-| 12.09.2019 | 1.4     | Add instruction for remote database usage                                                                                                                                                                            | Ilkka Seppälä        |
-| 10.10.2019 | 1.5     | Add instructions for binding xroad-proxy to ports 80,443                                                                                                                                                             | Jarkko Hyöty         |
-| 30.04.2020 | 1.6     | Add instructions how to use remote database located in Microsoft Azure                                                                                                                                               | Ilkka Seppälä        |
-| 12.06.2020 | 1.7     | Update reference data regarding JMX listening ports                                                                                                                                                                  | Petteri Kivimäki     |
-| 24.06.2020 | 1.8     | Add repository sign key details in section [2.2 Reference data](#22-reference-data)                                                                                                                                  | Petteri Kivimäki     |
-| 24.06.2020 | 1.9     | Remove environmental and operational monitoring daemon JMX listening ports from section [2.2 Reference data](#22-reference-data)                                                                                     | Petteri Kivimäki     |
-| 09.08.2020 | 1.10    | Update ports information in section [2.2 Reference data](#22-reference-data), add section [2.2.1 Network Diagram](#221-network-diagram)                                                                              | Petteri Kivimäki     |
-| 17.08.2020 | 1.11    | Update for RHEL 8. Document id and name changed.                                                                                                                                                                     | Jarkko Hyöty         |
-| 16.09.2020 | 1.12    | Describe deployment options and database customization options.                                                                                                                                                      | Ilkka Seppälä        |
-| 29.09.2020 | 1.13    | Add instructions for creating database structure and roles manually.                                                                                                                                                 | Ilkka Seppälä        |
-| 16.04.2021 | 1.14    | Update remote database installation instructions                                                                                                                                                                     | Jarkko Hyöty         |
-| 18.05.2021 | 1.15    | Add error handling section                                                                                                                                                                                           | Ilkka Seppälä        |
-| 01.07.2021 | 1.16    | Update 3rd party key server                                                                                                                                                                                          | Petteri Kivimäki     |
-| 11.08.2021 | 1.17    | Add backup encryption information                                                                                                                                                                                    | Petteri Kivimäki     |
-| 18.08.2021 | 1.18    | Minor updates to Annex D                                                                                                                                                                                             | Ilkka Seppälä        |
-| 25.08.2021 | 1.19    | Update X-Road references from version 6 to 7                                                                                                                                                                         | Caro Hautamäki       |
-| 26.08.2021 | 1.20    | Add instructions how to disable the messagelog addon before installing, add section [2.7 Disable the Messagelog Addon before Installation (optional)](#27-disable-the-messagelog-addon-before-installation-optional) | Caro Hautamäki       |
-| 03.09.2021 | 1.21    | Minor fixes                                                                                                                                                                                                          | Ilkka Seppälä        |
-| 06.09.2021 | 1.22    | Update list of running services                                                                                                                                                                                      | Jarkko Hyöty         |
-| 23.05.2023 | 1.23    | Minor backup encryption configuration fixes                                                                                                                                                                          | Eneli Reimets        |
-| 09.10.2023 | 1.24    | Java 17 installation instructions for RHEL 7                                                                                                                                                                         | Justas Samuolis      |
-| 13.12.2023 | 1.25    | Remove Java 17 manual installation instructions for RHEL 8                                                                                                                                                           | Justas Samuolis      |
-| 19.12.2023 | 1.26    | Add RHEL 9 as supported platform                                                                                                                                                                                     | Justas Samuolis      |
-| 02.01.2024 | 1.27    | Loopback ports added                                                                                                                                                                                                 | Justas Samuolis      |
-| 12.06.2024 | 1.28    | Add ACME server to the network diagram, add a section about enabling ACME support                                                                                                                                    | Petteri Kivimäki     |
-| 25.06.2024 | 1.29    | Add global configuration download port 443 to the network diagram                                                                                                                                                    | Petteri Kivimäki     |
-| 17.07.2024 | 1.30    | Java 21 installation instructions for RHEL 7                                                                                                                                                                         | Ovidijus Narkevičius |
-| 16.12.2024 | 1.31    | Instructions to install PostgreSQL packages                                                                                                                                                                          | Justas Samuolis      |
-| 14.01.2025 | 1.32    | Adding extra check for remote database setup                                                                                                                                                                         | Eneli Reimets        |
-| 18.02.2025 | 1.33    | Configuring memory allocation fo proxy service                                                                                                                                                                       | Ovidijus Narkevičius |
-| 10.03.2025 | 1.34    | Update required connections and other minor updates                                                                                                                                                    | Petteri Kivimäki     |
-
+| Date       | Version | Description                                                                                                                                                                                                          | Author           |
+|------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
+| 25.10.2018 | 1.0     | Initial version                                                                                                                                                                                                      | Petteri Kivimäki |
+| 16.11.2018 | 1.1     | Update link to Ubuntu installation guide                                                                                                                                                                             | Jarkko Hyöty     |
+| 28.01.2018 | 1.2     | Update port 2080 documentation                                                                                                                                                                                       | Petteri Kivimäki |
+| 11.09.2019 | 1.3     | Remove Ubuntu 14.04 from supported platforms                                                                                                                                                                         | Jarkko Hyöty     |
+| 12.09.2019 | 1.4     | Add instruction for remote database usage                                                                                                                                                                            | Ilkka Seppälä    |
+| 10.10.2019 | 1.5     | Add instructions for binding xroad-proxy to ports 80,443                                                                                                                                                             | Jarkko Hyöty     |
+| 30.04.2020 | 1.6     | Add instructions how to use remote database located in Microsoft Azure                                                                                                                                               | Ilkka Seppälä    |
+| 12.06.2020 | 1.7     | Update reference data regarding JMX listening ports                                                                                                                                                                  | Petteri Kivimäki |
+| 24.06.2020 | 1.8     | Add repository sign key details in section [2.2 Reference data](#22-reference-data)                                                                                                                                  | Petteri Kivimäki |
+| 24.06.2020 | 1.9     | Remove environmental and operational monitoring daemon JMX listening ports from section [2.2 Reference data](#22-reference-data)                                                                                     | Petteri Kivimäki |
+| 09.08.2020 | 1.10    | Update ports information in section [2.2 Reference data](#22-reference-data), add section [2.2.1 Network Diagram](#221-network-diagram)                                                                              | Petteri Kivimäki |
+| 17.08.2020 | 1.11    | Update for RHEL 8. Document id and name changed.                                                                                                                                                                     | Jarkko Hyöty     |
+| 16.09.2020 | 1.12    | Describe deployment options and database customization options.                                                                                                                                                      | Ilkka Seppälä    |
+| 29.09.2020 | 1.13    | Add instructions for creating database structure and roles manually.                                                                                                                                                 | Ilkka Seppälä    |
+| 16.04.2021 | 1.14    | Update remote database installation instructions                                                                                                                                                                     | Jarkko Hyöty     |
+| 18.05.2021 | 1.15    | Add error handling section                                                                                                                                                                                           | Ilkka Seppälä    |
+| 01.07.2021 | 1.16    | Update 3rd party key server                                                                                                                                                                                          | Petteri Kivimäki |
+| 11.08.2021 | 1.17    | Add backup encryption information                                                                                                                                                                                    | Petteri Kivimäki |
+| 18.08.2021 | 1.18    | Minor updates to Annex D                                                                                                                                                                                             | Ilkka Seppälä    |
+| 25.08.2021 | 1.19    | Update X-Road references from version 6 to 7                                                                                                                                                                         | Caro Hautamäki   |
+| 26.08.2021 | 1.20    | Add instructions how to disable the messagelog addon before installing, add section [2.7 Disable the Messagelog Addon before Installation (optional)](#27-disable-the-messagelog-addon-before-installation-optional) | Caro Hautamäki   |
+| 03.09.2021 | 1.21    | Minor fixes                                                                                                                                                                                                          | Ilkka Seppälä    |
+| 06.09.2021 | 1.22    | Update list of running services                                                                                                                                                                                      | Jarkko Hyöty     |
+| 23.05.2023 | 1.23    | Minor backup encryption configuration fixes                                                                                                                                                                          | Eneli Reimets    |
+| 09.10.2023 | 1.24    | Java 17 installation instructions for RHEL 7                                                                                                                                                                         | Justas Samuolis  |
+| 13.12.2023 | 1.25    | Remove Java 17 manual installation instructions for RHEL 8                                                                                                                                                           | Justas Samuolis  |
+| 19.12.2023 | 1.26    | Add RHEL 9 as supported platform                                                                                                                                                                                     | Justas Samuolis  |
+| 02.01.2024 | 1.27    | Loopback ports added                                                                                                                                                                                                 | Justas Samuolis  |
+| 12.06.2024 | 1.28    | Add ACME server to the network diagram, add a section about enabling ACME support                                                                                                                                    | Petteri Kivimäki |
+| 25.06.2024 | 1.29    | Add global configuration download port 443 to the network diagram                                                                                                                                                    | Petteri Kivimäki |
 ## License
 
 This document is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/
@@ -68,15 +62,15 @@ This document is licensed under the Creative Commons Attribution-ShareAlike 3.0 
   - [2.2 Reference Data](#22-reference-data)
     - [2.2.1 Network Diagram](#221-network-diagram)
   - [2.3 Requirements for the Security Server](#23-requirements-for-the-security-server)
-    - [2.3.1 Installing Java 21](#231-installing-java-21)
+    - [2.3.1 Installing Java 17](#231-installing-java-17)
+      - [2.3.1.1 Installing Java 17 on RHEL 7](#2311-installing-java-17-on-rhel-7)
   - [2.4 Preparing OS](#24-preparing-os)
   - [2.5 Setup Package Repository](#25-setup-package-repository)
-  - [2.6 Database Setup](#26-database-setup)
-    - [2.6.1 Local Database Setup](#261-local-database-setup)
-    - [2.6.2 Remote Database Setup (optional)](#262-remote-database-setup-optional)
+  - [2.6 Remote Database Setup (optional)](#26-remote-database-setup-optional)
   - [2.7 Disable the Messagelog Addon before Installation (optional)](#27-disable-the-messagelog-addon-before-installation-optional)
   - [2.8 Security Server Installation](#28-security-server-installation)
-    - [2.8.1 Start Security Server](#281-start-security-server)
+    - [2.8.1 Configure Proxy Ports](#281-configure-proxy-ports)
+    - [2.8.2 Start Security Server](#282-start-security-server)
   - [2.9 Post-Installation Checks](#29-post-installation-checks)
   - [2.10 Installing the Support for Hardware Tokens](#210-installing-the-support-for-hardware-tokens)
   - [2.11 Installing the Support for Environmental Monitoring](#211-installing-the-support-for-environmental-monitoring)
@@ -86,7 +80,6 @@ This document is licensed under the Creative Commons Attribution-ShareAlike 3.0 
   - [3.3 Configuration](#33-configuration)
   - [3.4 Configuring Configuration Backup Encryption](#34-configuring-configuration-backup-encryption)
   - [3.5 Enabling ACME Support](#35-enabling-acme-support)
-  - [3.6 Configuring the memory allocation for the Proxy Service](#36-configuring-the-memory-allocation-for-the-proxy-service)
 - [4 Installation Error handling](#4-installation-error-handling)
   - [4.1 ERROR: Upgrade supported from version X.Y.Z or newer.](#41-error-upgrade-supported-from-version-xyz-or-newer)
 - [Annex A Security Server Default Database Properties](#annex-a-security-server-default-database-properties)
@@ -109,7 +102,7 @@ This document is licensed under the Creative Commons Attribution-ShareAlike 3.0 
 
 ### 1.1 Target Audience
 
-The intended audience of this Installation Guide are X-Road Security Server system administrators responsible for installing and using X-Road software. The daily operation and maintenance of the Security Server is covered by its User Guide \[[UG-SS](#Ref_UG-SS)\].
+The intended audience of this Installation Guide are X-Road Security server system administrators responsible for installing and using X-Road software. The daily operation and maintenance of the Security Server is covered by its User Guide \[[UG-SS](#Ref_UG-SS)\].
 
 The document is intended for readers with a moderate knowledge of Linux server management, computer networks, and the X-Road working principles.
 
@@ -133,8 +126,8 @@ There are multiple alternatives how the Security Server can be deployed. The opt
 
 The Security Server runs on the following platforms:
 
-* Red Hat Enterprise Linux (RHEL) versions 8 and 9 on a x86-64 platform.
-* Ubuntu Server 22.04 LTS and 24.04 LTS on a x86-64 platform. See [IG-SS](ig-ss_x-road_v6_security_server_installation_guide.md) for more information.
+* Red Hat Enterprise Linux (RHEL) versions 7, 8 and 9 on a x86-64 platform.
+* Ubuntu Server 20.04 and 22.04 on a x86-64 platform. See [IG-SS](ig-ss_x-road_v6_security_server_installation_guide.md) for more information.
 
 The software can be installed both on physical and virtualized hardware (of the latter, Xen and Oracle VirtualBox have been tested).
 
@@ -146,32 +139,31 @@ The software can be installed both on physical and virtualized hardware (of the 
 **Caution**: Data necessary for the functioning of the operating system is not included.
 
 
-| Ref    |                                                                                | Explanation                                                                                                                                                                                                                                                                                |
-|--------|--------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1.0    | RHEL (8.0 or newer; 9.3 or newer), x86-64 CPU, 4 GB RAM, 10 GB free disk space | Minimum requirements                                                                                                                                                                                                                                                                       |
-| 1.1    | https://artifactory.niis.org/xroad-release-rpm                                 | X-Road package repository                                                                                                                                                                                                                                                                  |
-| 1.2    | https://artifactory.niis.org/api/gpg/key/public                                | The repository key.<br /><br />Hash: `935CC5E7FA5397B171749F80D6E3973B`<br  />Fingerprint: `A01B FE41 B9D8 EAF4 872F  A3F1 FB0D 532C 10F6 EC5B`<br  />3rd party key server: [Ubuntu key server](https://keyserver.ubuntu.com/pks/lookup?search=0xfb0d532c10f6ec5b&fingerprint=on&op=index) |
-| 1.3    |                                                                                | Account name in the user interface                                                                                                                                                                                                                                                         |
-| 1.4    | **Inbound ports from external network**                                        | Ports for inbound connections from the external network to the Security Server                                                                                                                                                                                                             |
-| &nbsp; | TCP 80                                                                         | Incoming ACME challenge requests from ACME servers                                                                                                                                                                                                                                         |
-|        | TCP 5500                                                                       | Message exchange between Security Servers                                                                                                                                                                                                                                                  |
-|        | TCP 5577                                                                       | Querying of OCSP responses between Security Servers                                                                                                                                                                                                                                        |
-| 1.5    | **Outbound ports to external network**                                         | Ports for outbound connections from the Security Server to the external network                                                                                                                                                                                                            |
-|        | TCP 5500                                                                       | Message exchange between Security Servers                                                                                                                                                                                                                                                  |
-|        | TCP 5577                                                                       | Querying of OCSP responses between Security Servers                                                                                                                                                                                                                                        |
-|        | TCP 4001                                                                       | Communication with the Central Server                                                                                                                                                                                                                                                      |
-|        | TCP 80,443                                                                     | Downloading global configuration from the Central Server                                                                                                                                                                                                                                   |
-|        | TCP 80,443                                                                     | Most common OCSP and time-stamping services                                                                                                                                                                                                                                                |
-|        | TCP 80,443                                                                     | Communication with ACME servers                                                                                                                                                                                                                                                            |
-|        | TCP 587                                                                        | Communication with mail servers. The mail server may be located in internal or external network                                                                                                                                                                                                                                                           |
-| 1.6    | **Inbound ports from internal network**                                        | Ports for inbound connections from the internal network to the Security Server                                                                                                                                                                                                             |
-|        | TCP 4000                                                                       | User interface and management REST API (local network). **Must not be accessible from the internet!**                                                                                                                                                                                      |
-|        | TCP 8080 (or TCP 80), 8443 (or TCP 443)                                        | Information system access points (in the local network). **Must not be accessible from the external network without strong authentication. If open to the external network, IP filtering is strongly recommended.**                                                                        |
-| 1.7    | **Outbound ports to internal network**                                         | Ports for inbound connections from the internal network to the Security Server                                                                                                                                                                                                             |
-|        | TCP 80, 443, *other*                                                           | Producer information system endpoints                                                                                                                                                                                                                                                      |
-|        | TCP 2080                                                                       | Message exchange between Security Server and operational data monitoring daemon (by default on localhost)                                                                                                                                                                                  |
-| 1.8    |                                                                                | Security Server internal IP address(es) and hostname(s)                                                                                                                                                                                                                                    |
-| 1.9    |                                                                                | Security Server public IP address, NAT address                                                                                                                                                                                                                                             |
+| Ref    |                                                                                              | Explanation                                                                                                                                                                                                                                                                                |
+|--------|----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1.0    | RHEL (7.3 or newer; 8.0 or newer; 9.3 or newer), x86-64 CPU, 4 GB RAM, 10 GB free disk space | Minimum requirements                                                                                                                                                                                                                                                                       |
+| 1.1    | https://artifactory.niis.org/xroad-release-rpm                                               | X-Road package repository                                                                                                                                                                                                                                                                  |
+| 1.2    | https://artifactory.niis.org/api/gpg/key/public                                              | The repository key.<br /><br />Hash: `935CC5E7FA5397B171749F80D6E3973B`<br  />Fingerprint: `A01B FE41 B9D8 EAF4 872F  A3F1 FB0D 532C 10F6 EC5B`<br  />3rd party key server: [Ubuntu key server](https://keyserver.ubuntu.com/pks/lookup?search=0xfb0d532c10f6ec5b&fingerprint=on&op=index) |
+| 1.3    |                                                                                              | Account name in the user interface                                                                                                                                                                                                                                                         |
+| 1.4    | **Inbound ports from external network**                                                      | Ports for inbound connections from the external network to the Security Server                                                                                                                                                                                                             |
+| &nbsp; | TCP 80                                                                                       | Incoming ACME challenge requests from ACME Servers                                                                                                                                                                                                                                         |
+|        | TCP 5500                                                                                     | Message exchange between Security Servers                                                                                                                                                                                                                                                  |
+|        | TCP 5577                                                                                     | Querying of OCSP responses between Security Servers                                                                                                                                                                                                                                        |
+| 1.5    | **Outbound ports to external network**                                                       | Ports for outbound connections from the Security Server to the external network                                                                                                                                                                                                            |
+|        | TCP 5500                                                                                     | Message exchange between Security Servers                                                                                                                                                                                                                                                  |
+|        | TCP 5577                                                                                     | Querying of OCSP responses between Security Servers                                                                                                                                                                                                                                        |
+|        | TCP 4001                                                                                     | Communication with the Central Server                                                                                                                                                                                                                                                      |
+|        | TCP 80,443                                                                                   | Downloading global configuration from the Central Server                                                                                                                                                                                                                                   |
+|        | TCP 80,443                                                                                   | Most common OCSP and time-stamping services                                                                                                                                                                                                                                                |
+|        | TCP 80,443                                                                                   | Communication with ACME servers                                                                                                                                                                                                                                                            |
+| 1.6    | **Inbound ports from internal network**                                                      | Ports for inbound connections from the internal network to the Security Server                                                                                                                                                                                                             |
+|        | TCP 4000                                                                                     | User interface and management REST API (local network). **Must not be accessible from the internet!**                                                                                                                                                                                      |
+|        | TCP 8080 (or TCP 80), 8443 (or TCP 443)                                                      | Information system access points (in the local network). **Must not be accessible from the external network without strong authentication. If open to the external network, IP filtering is strongly recommended.**                                                                        |
+| 1.7    | **Outbound ports to internal network**                                                       | Ports for inbound connections from the internal network to the Security Server                                                                                                                                                                                                             |
+|        | TCP 80, 443, *other*                                                                         | Producer information system endpoints                                                                                                                                                                                                                                                      |
+|        | TCP 2080                                                                                     | Message exchange between Security Server and operational data monitoring daemon (by default on localhost)                                                                                                                                                                                  |
+| 1.8    |                                                                                              | Security server internal IP address(es) and hostname(s)                                                                                                                                                                                                                                    |
+| 1.9    |                                                                                              | Security server public IP address, NAT address                                                                                                                                                                                                                                             |
 
 It is strongly recommended to protect the Security Server from unwanted access using a firewall (hardware or software based). The firewall can be applied to both incoming and outgoing connections depending on the security requirements of the environment where the Security Server is deployed. It is recommended to allow incoming traffic to specific ports only from explicitly defined sources using IP filtering. **Special attention should be paid with the firewall configuration since incorrect configuration may leave the Security Server vulnerable to exploits and attacks.**
 
@@ -184,22 +176,20 @@ The network diagram below provides an example of a basic Security Server setup. 
 
 The table below lists the required connections between different components.
 
-| Connection Type | Source                                                   | Target                                                   | Target Ports   | Protocol | Note                                                                                                                                                                                  |
-|-----------------|----------------------------------------------------------|----------------------------------------------------------|----------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Out             | Security Server                                          | Central Server                                           | 80, 443, 4001  | tcp      |                                                                                                                                                                                       |
-| Out             | Security Server                                          | Management Security Server                               | 5500, 5577     | tcp      |                                                                                                                                                                                       |
-| Out             | Security Server                                          | OCSP Service                                             | 80 / 443       | tcp      |                                                                                                                                                                                       |
-| Out             | Security Server                                          | Timestamping Service                                     | 80 / 443       | tcp      |                                                                                                                                                                                       |
-| Out             | Security Server                                          | Data Exchange Partner Security Server (Service Producer) | 5500, 5577     | tcp      |                                                                                                                                                                                       |
-| Out             | Security Server                                          | Producer Information System                              | 80, 443, other | tcp      | Target in the internal network                                                                                                                                                        |
-| Out             | Security Server                                          | ACME Server                                              | 80 / 443       | tcp      |                                                                                                                                                                                       |
-| Out             | Security Server                                          | Mail server                                              | 587            | tcp      |                                                                                                                                                                                       |
-| In              | Monitoring Security Server                               | Security Server                                          | 5500, 5577     | tcp      |                                                                                                                                                                                       |
-| In              | Data Exchange Partner Security Server (Service Consumer) | Security Server                                          | 5500, 5577     | tcp      |                                                                                                                                                                                       |
-| In              | ACME Server                                              | Security Server                                          | 80             | tcp      |                                                                                                                                                                                       | 
-| In              | Consumer Information System                              | Security Server                                          | 8080, 8443     | tcp      | Source in the internal network                                                                                                                                                        |
-| In              | Admin                                                    | Security Server                                          | 4000           | tcp      | Source in the internal network                                                                                                                                                        |
-| In              | Monitoring system                                        | Security Server                                          | other          | tcp      | Source in the internal network<br />The health check interface is disabled by default and the target port is defined by the Security Server administrator when the feature is enabled |
+| Connection Type | Source                                                   | Target                                                   | Target Ports   | Protocol | Note                           |
+|-----------------|----------------------------------------------------------|----------------------------------------------------------|----------------|----------|--------------------------------|
+| Out             | Security Server                                          | Central Server                                           | 80, 443, 4001  | tcp      |                                |
+| Out             | Security Server                                          | Management Security Server                               | 5500, 5577     | tcp      |                                |
+| Out             | Security Server                                          | OCSP Service                                             | 80 / 443       | tcp      |                                |
+| Out             | Security Server                                          | Timestamping Service                                     | 80 / 443       | tcp      |                                |
+| Out             | Security Server                                          | Data Exchange Partner Security Server (Service Producer) | 5500, 5577     | tcp      |                                |
+| Out             | Security Server                                          | Producer Information System                              | 80, 443, other | tcp      | Target in the internal network |
+| Out             | Security Server                                          | ACME Server                                              | 80 / 443       | tcp      |                                |
+| In              | Monitoring Security Server                               | Security Server                                          | 5500, 5577     | tcp      |                                |
+| In              | Data Exchange Partner Security Server (Service Consumer) | Security Server                                          | 5500, 5577     | tcp      |                                |
+| In              | ACME Server                                              | Security Server                                          | 80             | tcp      |                                | 
+| In              | Consumer Information System                              | Security Server                                          | 8080, 8443     | tcp      | Source in the internal network |
+| In              | Admin                                                    | Security Server                                          | 4000           | tcp      | Source in the internal network |
 
 The table below lists the open ports for Security Server components utilizing the _loopback_ interface. A loopback interface is a virtual network interface on a computer, facilitating self-communication for processes and applications. This enables local communication and the ports must be accessible locally.
 
@@ -228,29 +218,47 @@ Minimum recommended hardware parameters:
 
 Requirements to software and settings:
 
-* an installed and configured RHEL (8.0 or newer; 9.3 or newer) x86-64 operating system;
-* Java 21 should be installed;
+* an installed and configured RHEL (v7.3 or newer; 8.0 or newer; 9.3 or newer) x86-64 operating system;
+* Java 17 should be installed;
 * if the Security Server is separated from other networks by a firewall and/or NAT, the necessary connections to and from the Security Server are allowed (**reference data: 1.4; 1.5; 1.6; 1.7**). The enabling of auxiliary services which are necessary for the functioning and management of the operating system (such as DNS, NTP, and SSH) stay outside the scope of this guide;
 * if the Security Server has a private IP address, a corresponding NAT record must be created in the firewall (**reference data: 1.9**).
 
-#### 2.3.1 Installing Java 21
+#### 2.3.1 Installing Java 17
 
-Java 21 is a prerequisite for running the Security Server and should be installed prior installing/updating Security Server, however it is not included in default repositories for RHEL 7.
+Java 17 is a prerequisite for running the Security Server and should be installed prior installing/updating Security Server, however it is not included in default repositories for RHEL 7.
 Sample installation steps are provided below.
 
 * Check the current java version:
 
         java -version
 
-If the current Java version is 21, following steps should be skipped. If not, install Java 21 (OpenJDK):
+If the current Java version is 17, following steps should be skipped. If not, follow the instructions to install Java 17.
 
-        sudo yum install openjdk-21-jre-headless
+##### 2.3.1.1 Installing Java 17 on RHEL 7
 
-After the installation, verify the current java version:
+Sample installation steps for Eclipse Temurin JDK are provided below, but other JDK distributions can also be used.
+Follow these steps to install Temurin JDK 17 on RHEL 7:
+
+* Add the Adoptium repository to your system:
+
+        sudo tee /etc/yum.repos.d/adoptium.repo <<EOF
+        [Adoptium]
+        name=Adoptium
+        baseurl=https://packages.adoptium.net/artifactory/rpm/${DISTRIBUTION_NAME:-$(. /etc/os-release; echo $ID)}/7/\$basearch
+        enabled=1
+        gpgcheck=1
+        gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
+        EOF
+
+* Install Java 17 (Eclipse Temurin JDK):
+       
+        sudo yum install temurin-17-jdk
+
+* Verify the installation:
     
         java -version
 
-The output should contain Java version 21. If it does not, set the default Java version to 21 using *alternatives*:
+The output should contain Java version 17. If it does not, set the default Java version to 17 using *alternatives*:
 
         sudo alternatives --config java
 
@@ -283,31 +291,15 @@ Add the X-Road repository’s signing key to the list of trusted keys (**referen
   sudo rpm --import https://artifactory.niis.org/api/gpg/key/public
   ```
 
-### 2.6 Database Setup
+If you are installing the default setup with local PostgreSQL database and want to enable the messagelog addon, continue at section 2.8. If you need to customize database properties and e.g. use a remote database or disable the messagelog addon, read on.
 
-If you are installing the default setup with local PostgreSQL database, continue at section 2.6.1. If you need to use a remote database, continue at section 2.6.2.
-
-#### 2.6.1 Local Database Setup
-
-When installing the default setup with local database, PostgreSQL packages need to be installed before continuing with X-Road Security Server installation: 
-
-```bash
-sudo yum install postgresql-server postgresql-contrib
-```
-
-#### 2.6.2 Remote Database Setup (optional)
+### 2.6 Remote Database Setup (optional)
 
 *This is an optional step.* 
 
 Optionally, the Security Server can use a remote database server. To avoid installing the default local PostgreSQL server during Security Server installation, install the `xroad-database-remote` -package, which will also install the PostgreSQL client and create the `xroad` system user and configuration directories (`/etc/xroad`).
 ```bash
 sudo yum install xroad-database-remote
-```
-
-Verify in the remote database server, that PostgreSQL package `postgresql-contrib` was installed before continuing with X-Road Security Server installation:
-
-```bash
-sudo yum install postgresql-contrib
 ```
 
 For the application level backup and restore feature to work correctly, it is important to verify that the local PostgreSQL client has the same or later major version than the remote database server and, if necessary, install a different version of the `postgresql` package (see https://www.postgresql.org/download/linux/redhat/)
@@ -375,13 +367,11 @@ echo "ENABLE_MESSAGELOG=false" | sudo tee /etc/sysconfig/xroad-addon-messagelog
 
 ### 2.8 Security Server Installation
 
-Issue the following command to install the Security Server packages (use package `xroad-securityserver-fi` to include configuration specific to Finland; use package `xroad-securityserver-is` to include configuration specific to Iceland; there's no Estonia-specific package for RHEL):
+Issue the following command to install the Security Server packages (use package `xroad-securityserver-ee` to include configuration specific to Estonia; use package `xroad-securityserver-fi` to include configuration specific to Finland; use package `xroad-securityserver-is` to include configuration specific to Iceland):
 
   ```bash
   sudo yum install xroad-securityserver
   ```
-
-The meta-package `xroad-securityserver` also installs metaservices module `xroad-addon-metaservices`, messagelog module `xroad-addon-messagelog` and WSDL validator module `xroad-addon-wsdlvalidator`. The meta-packages `xroad-securityserver-fi`, `xroad-securityserver-is`, and `xroad-securityserver-fo` install operational data monitoring module `xroad-addon-opmonitoring`.
 
 Add system user (**reference data: 1.3**) whom all roles in the user interface are granted to. Add a new user with the command
 
@@ -391,7 +381,22 @@ Add system user (**reference data: 1.3**) whom all roles in the user interface a
 
 User roles are discussed in detail in X-Road Security Server User Guide \[[UG-SS](#Ref_UG-SS)\].
 
-#### 2.8.1 Start Security Server
+
+#### 2.8.1 Configure Proxy Ports
+
+**This is an optional step.** Change `xroad-proxy` to use ports 80 and 443.
+
+By default, `xroad-proxy` listens for consumer information system connections on ports 8080 (HTTP) and 8443 (HTTPS). To use standard HTTP(S) ports 80 and 443, verify that the ports are free, and make the following modifications:
+
+Edit `/etc/xroad/conf.d/local.ini` and add the following properties in the `[proxy]` section:
+
+  ```ini
+  [proxy]
+  client-http-port=80
+  client-https-port=443
+  ```
+
+#### 2.8.2 Start Security Server
 
 Once the installation is completed, start the Security Server
 
@@ -445,13 +450,14 @@ ATTENTION: Reference items 2.1 - 2.3 in the reference data are provided to the S
 
 The Security Server code and the software token’s PIN will be determined during the installation at the latest, by the person performing the installation.
 
-| Ref |                                                         | Explanation                                 |
-|-----|---------------------------------------------------------|---------------------------------------------|
-| 2.1 | &lt;global configuration anchor file&gt; or &lt;URL&gt; | Global configuration anchor file            |
-| 2.2 | E.g.<br>GOV - government<br> COM - commercial           | Member class of the Security Server's owner |
-| 2.3 | &lt;Security Server owner register code&gt;             | Member code of the Security Server's owner  |
-| 2.4 | &lt;choose Security Server identificator name&gt;       | Security Server's code                      |
-| 2.5 | &lt;choose PIN for software token&gt;                   | Software token’s PIN                        |
+ Ref  |                                                   | Explanation
+ ---- | ------------------------------------------------- | --------------------------------------------------
+ 2.1  | &lt;global configuration anchor file&gt; or &lt;URL&gt; | Global configuration anchor file
+ 2.2  | E.g.<br>GOV - government<br> COM - commercial     | Member class of the Security Server's owner
+ 2.3  | &lt;Security Server owner register code&gt;       | Member code of the Security Server's owner
+ 2.4  | &lt;choose Security Server identificator name&gt; | Security server's code
+ 2.5  | &lt;choose PIN for software token&gt;             | Software token’s PIN
+
 
 ### 3.3 Configuration
 
@@ -474,12 +480,12 @@ If the configuration is successfully downloaded, the system asks for the followi
 
   If the member class and member code are correctly entered, the system displays the Security Server owner’s name as registered in the X-Road center.
 
-* Security Server code (**reference data: 2.4**), which is chosen by the Security Server administrator and which has to be unique across all the Security Servers belonging to the same X-Road member.
+* Security server code (**reference data: 2.4**), which is chosen by the Security Server administrator and which has to be unique across all the Security Servers belonging to the same X-Road member.
 * Software token’s PIN (**reference data: 2.5**). The PIN will be used to protect the keys stored in the software token. The PIN must be stored in a secure place, because it will be no longer possible to use or recover the private keys in the token once the PIN has been lost.
 
 ### 3.4 Configuring Configuration Backup Encryption
 
-It is possible to automatically encrypt Security Server configuration backups. Security Server uses The GNU Privacy Guard (https://www.gnupg.org)
+It is possible to automatically encrypt Security Server configuration backups. Security server uses The GNU Privacy Guard (https://www.gnupg.org)
 for backup encryption and verification. Backups are always signed, but backup encryption is initially turned off.
 To turn encryption on, please override the default configuration in the file `/etc/xroad/conf.d/local.ini`, in the `[proxy]` section (add or edit this section).
 
@@ -511,12 +517,8 @@ The key can then be moved to an external host and imported to GPG keyring with t
 
 ### 3.5 Enabling ACME Support
 
-Automated Certificate Management Environment (ACME) protocol enables automated certificate management of the authentication and sign
+Automated Certificate Management Environment (ACME) protocol enables partly automated certificate management of the authentication and sign
 certificates on the Security Server. More information about the required configuration is available in the [Security Server User Guide](ug-ss_x-road_6_security_server_user_guide.md#24-configuring-acme).
-
-### 3.6 Configuring the memory allocation for the Proxy Service
-
-The memory allocation for the Proxy Service can be configured using helper script `/usr/share/xroad/scripts/proxy_memory_helper.sh`. More information about the usage of this script is available in the [Security Server User Guide](ug-ss_x-road_6_security_server_user_guide.md#211-updating-proxy-services-memory-allocation-command-line-arguments).
 
 ## 4 Installation Error handling
 
@@ -613,7 +615,7 @@ op-monitor.hibernate.connection.password = <randomly generated password>
 ## Annex B Database Users
 
 | User             | Database   | Privileges               | Description                                                                              |
-|------------------|------------|--------------------------|------------------------------------------------------------------------------------------|
+| ---------------- | ---------- | ------------------------ | ---------------------------------------------------------------------------------------- |
 | serverconf       | serverconf | TEMPORARY,CONNECT        | The database user used to read/write the serverconf database during application runtime. |
 | serverconf_admin | serverconf | CREATE,TEMPORARY,CONNECT | The database user used to create/update the serverconf schema.                           |
 | messagelog       | messagelog | TEMPORARY,CONNECT        | The database user used to read/write the messagelog database during application runtime. |
@@ -635,30 +637,30 @@ X-Road Security Server has multiple deployment options. The simplest choice is t
 
 The simplest deployment option is to use a single Security Server with local database. For development and testing purposes there is rarely need for anything else, but for production the requirements may be stricter.
 
-![Security Server with local database](img/ig-ss_local_db.svg)
+![Security server with local database](img/ig-ss_local_db.svg)
 
 
 ### C.3 Remote Database
 
 It is possible to use a remote database with Security Server. This option is sometimes used in development and testing when there's need to externalize the database state.
 
-Security Server supports a variety of cloud databases including AWS RDS and Azure Database for PostgreSQL. This deployment option is useful when doing development in cloud environment, where use of cloud native database is the first choice.
+Security server supports a variety of cloud databases including AWS RDS and Azure Database for PostgreSQL. This deployment option is useful when doing development in cloud environment, where use of cloud native database is the first choice.
 
-![Security Server with remote database](img/ig-ss_remote_db.svg)
+![Security server with remote database](img/ig-ss_remote_db.svg)
 
 
 ### C.4 High Availability Setup
 
-In production systems it's rarely acceptable to have a single point of failure. Security Server supports provider side high availability setup via so called internal load balancing mechanism. The setup works so that the same member / member class / member code / subsystem / service code is configured on multiple Security Servers and X-Road will then route the request to the server that responds the fastest. Note that this deployment option does not provide performance benefits, just redundancy.
+In production systems it's rarely acceptable to have a single point of failure. Security server supports provider side high availability setup via so called internal load balancing mechanism. The setup works so that the same member / member class / member code / subsystem / service code is configured on multiple Security Servers and X-Road will then route the request to the server that responds the fastest. Note that this deployment option does not provide performance benefits, just redundancy.
 
-![Security Server high-availability setup](img/ig-ss_high_availability.svg)
+![Security server high-availability setup](img/ig-ss_high_availability.svg)
 
 
 ### C.5 Load Balancing Setup
 
 Busy production systems may need scalable performance in addition to high availability. X-Road supports external load balancing mechanism to address both of these problems simultaneously. A load balancer is added in front of a Security Server cluster to route the requests based on selected algorithm. This deployment option is extensively documented in \[[IG-XLB](#Ref_IG-XLB)\].
 
-![Security Server load balancing setup](img/ig-ss_load_balancing.svg)
+![Security server load balancing setup](img/ig-ss_load_balancing.svg)
 
 
 ### C.6 Summary
@@ -686,12 +688,6 @@ These databases can be hosted on one database server (default setup), or you can
 Login to the database server(s) as the superuser (`postgres` by default) to run the commands, e.g.
 ```bash
 psql -h <database host>:<port> -U <superuser> -d postgres
-```
-
-Verify in the database server, that PostgreSQL package `postgresql-contrib` was installed before running following scripts:
-
-```bash
-sudo yum install postgresql-contrib
 ```
 
 Run the following commands to create the necessary database structures. If necessary, customize the database and role names to suit your environment (e.g when the same database server is shared between several Security Server instances, it is necessary to have separate database names and roles for each server). By default, the database, database user, and schema use the same name (e.g. serverconf), and the admin user is named with \_admin prefix (e.g. serverconf_admin).

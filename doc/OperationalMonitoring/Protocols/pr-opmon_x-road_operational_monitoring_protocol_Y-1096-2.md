@@ -2,23 +2,20 @@
 
 **Technical Specification**
 
-Version: 1.5  
+Version: 1.2  
 Doc. ID: PR-OPMON
 
 | Date       | Version | Description                                                          | Author           |
-|------------|---------|----------------------------------------------------------------------|------------------|
+| ---------- | ------- | -------------------------------------------------------------------- | ---------------- |
 |            | 0.2     | Initial version                                                      |                  |
 | 23.01.2017 | 0.3     | Added license text, table of contents and version history            | Sami Kallio      |
 | 05.03.2018 | 0.4     | Added terms and abbreviations reference                              | Tatu Repo        |
-| 04.12.2018 | 0.5     | More detailed descriptions for *[request/response][In/Out]Ts* fields | Cybernetica AS   |
+| 04.12.2018 | 0.5     | More detailed descriptions for _[request/response][In/Out]Ts_ fields | Cybernetica AS   |
 | 18.02.2019 | 0.6     | Example response updated: added xRequestId                           | Caro Hautamäki   |
 | 23.05.2019 | 0.7     | Add info about status_code, request_rest_size, response_rest_size    | Tapio Jaakkola   |
 | 12.12.2019 | 1.0     | Update the protocol to the next major version                        | Ilkka Seppälä    |
 | 10.05.2023 | 1.1     | Security Categories removed.                                         | Justas Samuolis  |
 | 01.06.2023 | 1.2     | Update references                                                    | Petteri Kivimäki |
-| 02.10.2024 | 1.3     | Update schema file locations                                         | Justas Samuolis  | 
-| 05.12.2024 | 1.4     | Add endpoint level statistics gathering support                      | Eneli Reimets    |
-| 09.01.2025 | 1.5     | Restructure heading levels for the documentation platform            | Raido Kaju       |
 
 ## Table of Contents <!-- omit in toc -->
 
@@ -26,8 +23,8 @@ Doc. ID: PR-OPMON
 
 - [License](#license)
 - [1 Introduction](#1-introduction)
-    - [1.1 Terms and abbreviations](#11-terms-and-abbreviations)
-    - [1.2 References](#12-references)
+  - [1.1 Terms and abbreviations](#11-terms-and-abbreviations)
+  - [1.2 References](#12-references)
 - [2 Retrieving Operational Data of Security Server](#2-retrieving-operational-data-of-security-server)
 - [3 Retrieving Health Data of Security Server](#3-retrieving-health-data-of-security-server)
 - [Annex A WSDL for Operational Monitoring Messages](#annex-a-wsdl-for-operational-monitoring-messages)
@@ -41,17 +38,18 @@ Doc. ID: PR-OPMON
 
 <!-- tocstop -->
 
-## License
+# License
 
 This document is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/.
 
-## 1 Introduction
+# 1 Introduction
 
-This specification describes services that can be used by X-Road participants to gather operational monitoring information of the security servers. The operational monitoring information contains data about request exchange (such as which services or endpoints have been called, how many times, what was the size of the response, etc.) of the security servers. The X-Road operational monitoring protocol is intended to support external monitoring systems and other software that can monitor service level agreements, make service statistics, etc.
+This specification describes services that can be used by X-Road participants to gather operational monitoring information of the security servers. The operational monitoring information contains data about request exchange (such as which services have been called, how many times, what was the size of the response, etc.) of the security servers. The X-Road operational monitoring protocol is intended to support external monitoring systems and other software that can monitor service level agreements, make service statistics, etc.
 
 The operational monitoring services are the following:
-* *getSecurityServerOperationalData* - downloading operational data of the specified time period of the security server.
-* *getSecurityServerHealthData* - downloading health data of the security server.
+
+- _getSecurityServerOperationalData_ - downloading operational data of the specified time period of the security server.
+- _getSecurityServerHealthData_ - downloading health data of the security server.
 
 The operational monitoring services are implemented as standard X-Road services (see \[[PR-MESS](#PR-MESS)\] for detailed description of the protocol) that are offered by the owner of the security servers.
 
@@ -78,58 +76,56 @@ See X-Road terms and abbreviations documentation \[[TA-TERMS](#Ref_TERMS)\].
 <a name="RFC2119"></a>**RFC2119** -- Key words for use in RFCs to Indicate Requirement Levels. Request for Comments 2119, Internet Engineering Task Force, March 1997, https://www.ietf.org/rfc/rfc2119.txt  
 <a name="Ref_TERMS" class="anchor"></a>**TA-TERMS** -- X-Road Terms and Abbreviations. Document ID: [TA-TERMS](../../terms_x-road_docs.md).
 
-## 2 Retrieving Operational Data of Security Server
+# 2 Retrieving Operational Data of Security Server
 
 Security server clients can retrieve operational data of the specified time period of the security server. Method is invoked as regular X-Road service.
 
-The *service* SOAP header MUST contain the identifier of the target service provider (owner of the security server) and the value of the *serviceCode* element MUST be *"getSecurityServerOperationalData"*. Additionally *securityServer* SOAP header SHOULD be used to identify the security server that is the target of the request. This is needed to uniquely determine the target security server in a clustered security server configuration. The SOAP header *securityServer* MUST be used in case the sender of the request is the owner of target security server. This header is used to perform correct authentication of the sender.  
+The _service_ SOAP header MUST contain the identifier of the target service provider (owner of the security server) and the value of the _serviceCode_ element MUST be _"getSecurityServerOperationalData"_. Additionally _securityServer_ SOAP header SHOULD be used to identify the security server that is the target of the request. This is needed to uniquely determine the target security server in a clustered security server configuration. The SOAP header _securityServer_ MUST be used in case the sender of the request is the owner of target security server. This header is used to perform correct authentication of the sender.
 
-The body of the request MUST contain an XML element *getSecurityServerOperationalData* which contains the following XML elements.
-* *searchCriteria* (mandatory) -- Determines the search criteria of the requested monitoring data records. This element contains the following XML elements.
- * *recordsFrom* (mandatory) -- Unix timestamp in seconds to determine the beginning of the time period of the monitoring data records. The beginning timestamp MUST be less than the system value of *current time - configured offset seconds* (all of the operational data before that system timestamp SHOULD be committed. By default 60 seconds are used for the offset).
- * *recordsTo* (mandatory) -- Unix timestamp in seconds to determine the end (inclusively) of the time period of the monitoring data records. If the end timestamp is bigger or equal to the system value of *current time - configured offset seconds* then *recordsTo* value is shifted to the value of *current time - configured offset seconds - 1* (it is allowed to subtract a bigger time buffer to ensure that all the operational data of the specified time period are committed. By default 60 seconds are used for the offset).  
- * *client* (optional) -- Determines the client identifier of the service provider in the monitoring data records.  
-* *outputSpec* (optional) -- A sequence of optional *outputField* elements that determines the set of the requested operational data record fields in the response payload. If omitted or empty sequence, all record fields MUST be included into the response payload. The possible output field values are the following:
+The body of the request MUST contain an XML element _getSecurityServerOperationalData_ which contains the following XML elements.
 
- * *monitoringDataTs*
- * *securityServerInternalIp*
- * *securityServerType*
- * *requestInTs*
- * *requestOutTs*
- * *responseInTs*
- * *responseOutTs*
- * *clientXRoadInstance*
- * *clientMemberClass*
- * *clientMemberCode*
- * *clientSubsystemCode*
- * *serviceXRoadInstance*
- * *serviceMemberClass*
- * *serviceMemberCode*
- * *serviceSubsystemCode*
- * *serviceCode*
- * *restMethod*
- * *restPath*
- * *serviceVersion*
- * *representedPartyClass*
- * *representedPartyCode*
- * *messageId*
- * *messageUserId*
- * *messageIssue*
- * *messageProtocolVersion*
- * *clientSecurityServerAddress*
- * *serviceSecurityServerAddress*
- * *requestSize*
- * *requestMimeSize*
- * *requestAttachmentCount*
- * *responseSize*
- * *responseMimeSize*
- * *responseAttachmentCount*
- * *succeeded*
- * *serviceType*
- * *faultCode*
- * *faultString*
- * *statusCode*
- 
+- _searchCriteria_ (mandatory) -- Determines the search criteria of the requested monitoring data records. This element contains the following XML elements.
+- _recordsFrom_ (mandatory) -- Unix timestamp in seconds to determine the beginning of the time period of the monitoring data records. The beginning timestamp MUST be less than the system value of _current time - configured offset seconds_ (all of the operational data before that system timestamp SHOULD be committed. By default 60 seconds are used for the offset).
+- _recordsTo_ (mandatory) -- Unix timestamp in seconds to determine the end (inclusively) of the time period of the monitoring data records. If the end timestamp is bigger or equal to the system value of _current time - configured offset seconds_ then _recordsTo_ value is shifted to the value of _current time - configured offset seconds - 1_ (it is allowed to subtract a bigger time buffer to ensure that all the operational data of the specified time period are committed. By default 60 seconds are used for the offset).
+- _client_ (optional) -- Determines the client identifier of the service provider in the monitoring data records.
+- _outputSpec_ (optional) -- A sequence of optional _outputField_ elements that determines the set of the requested operational data record fields in the response payload. If omitted or empty sequence, all record fields MUST be included into the response payload. The possible output field values are the following:
+
+- _monitoringDataTs_
+- _securityServerInternalIp_
+- _securityServerType_
+- _requestInTs_
+- _requestOutTs_
+- _responseInTs_
+- _responseOutTs_
+- _clientXRoadInstance_
+- _clientMemberClass_
+- _clientMemberCode_
+- _clientSubsystemCode_
+- _serviceXRoadInstance_
+- _serviceMemberClass_
+- _serviceMemberCode_
+- _serviceSubsystemCode_
+- _serviceCode_
+- _serviceVersion_
+- _representedPartyClass_
+- _representedPartyCode_
+- _messageId_
+- _messageUserId_
+- _messageIssue_
+- _messageProtocolVersion_
+- _clientSecurityServerAddress_
+- _serviceSecurityServerAddress_
+- _requestSize_
+- _requestMimeSize_
+- _requestAttachmentCount_
+- _responseSize_
+- _responseMimeSize_
+- _responseAttachmentCount_
+- _succeeded_
+- _serviceType_
+- _faultCode_
+- _faultString_
+- _statusCode_
 
 The fields are described in the JSON-schema of the response payload \[[Annex B](#AnnexB)\].
 
@@ -162,13 +158,14 @@ The example request message is presented in \[[Annex C.1](#AnnexC.1)\].
 The response MUST be MIME multipart message with attachment using swaRef \[[SWAREF](#SWAREF)\]. The response MUST contain the following MIME parts.
 
 1. X-Road SOAP response message. The message MUST contain the regular X-Road headers and the body MUST contain the following elements.
- * *recordsCount* (mandatory) -- Number of records in the payload.
- * *records* (mandatory) -- The reference (CID URI) to the attachment (MIME part) containing the operational data records.
- * *nextRecordsFrom* (optional) -- This element MUST be included in case operational data records do not fit into the response (size limitation) and/or in case the *recordsTo* timestamp in the search criteria was actually shifted earlier. The value MUST be the proper Unix timestamp in seconds for the search criteria element *recordsFrom* of the next sequential query.
 
- The content type of this part MUST be *text/xml*.
+- _recordsCount_ (mandatory) -- Number of records in the payload.
+- _records_ (mandatory) -- The reference (CID URI) to the attachment (MIME part) containing the operational data records.
+- _nextRecordsFrom_ (optional) -- This element MUST be included in case operational data records do not fit into the response (size limitation) and/or in case the _recordsTo_ timestamp in the search criteria was actually shifted earlier. The value MUST be the proper Unix timestamp in seconds for the search criteria element _recordsFrom_ of the next sequential query.
 
-2. Operational data (payload). This MIME part MUST contain queried operational data records in JSON format and compressed (GZIP \[[RFC1952](#RFC1952)\]) . The content type of this part MUST be *application/gzip*. The JSON-Schema for payload is described in \[[Annex B](#AnnexB)\].
+The content type of this part MUST be _text/xml_.
+
+2. Operational data (payload). This MIME part MUST contain queried operational data records in JSON format and compressed (GZIP \[[RFC1952](#RFC1952)\]) . The content type of this part MUST be _application/gzip_. The JSON-Schema for payload is described in \[[Annex B](#AnnexB)\].
 
 The XML schema fragment of the operational data response body is shown below. For clarity, documentation in the schema fragment is omitted.
 
@@ -184,14 +181,14 @@ The XML schema fragment of the operational data response body is shown below. Fo
 
 The example response message is presented in \[[Annex C.2](#AnnexC.2)\].
 
-## 3 Retrieving Health Data of Security Server
+# 3 Retrieving Health Data of Security Server
 
 Security server clients can retrieve health data of the specified security server. Method is invoked as regular X-Road service.
 
-The *service* SOAP header MUST contain the identifier of the target service provider (owner of the security server) and the value of the *serviceCode* element MUST be *"getSecurityServerHealthData"*. Additionally *securityServer* SOAP header SHOULD contain the identifier of the security server retrieving data from. The last one determines the security server uniquely in a clustered security server configuration.
+The _service_ SOAP header MUST contain the identifier of the target service provider (owner of the security server) and the value of the _serviceCode_ element MUST be _"getSecurityServerHealthData"_. Additionally _securityServer_ SOAP header SHOULD contain the identifier of the security server retrieving data from. The last one determines the security server uniquely in a clustered security server configuration.
 
-The body of the request MUST contain an XML element *getSecurityServerHealthData*.
-This element MAY contain XML element *filterCriteria* to determine a client (service provider). In this case filtering health data by a client MUST be performed.
+The body of the request MUST contain an XML element _getSecurityServerHealthData_.
+This element MAY contain XML element _filterCriteria_ to determine a client (service provider). In this case filtering health data by a client MUST be performed.
 
 The XML schema fragment of the health data request body is shown below. For clarity, documentation in the schema fragment is omitted.
 
@@ -205,36 +202,38 @@ The XML schema fragment of the health data request body is shown below. For clar
   <xs:sequence>
   <xs:element name="client" type="id:XRoadClientIdentifierType" minOccurs="0" />
   </xs:sequence>
-</xs:complexType>    
+</xs:complexType>
 ```
 
 The example request message is presented in \[[Annex C.3](#AnnexC.3)\].
 
 The response message MUST contain health data of the queried security server:
- * *monitoringStartupTimestamp* -- The Unix timestamp in milliseconds when the monitoring system was started.
- * *statisticsPeriodSeconds* -- Duration of the statistics period in seconds.
- * *servicesEvents* -- Health data of all (filtered) services of the security server.
 
-  The XML element *servicesEvents* MUST contain list of items (*serviceEvents*) representing service statistics, where item contains following elements.
-  * *service* (mandatory) -- The service identifier.
-  * *lastSuccessfulRequestTimestamp* (optional) -- The timestamp of the last successful request (Unix timestamp in milliseconds).
-  * *lastUnsuccessfulRequestTimestamp* (optional)-- The timestamp of the last unsuccessful request (Unix timestamp in milliseconds).
-  * *serviceType* (optional) -- The type of the service.
-  * *lastPeriodStatistics* (optional) -- The statistics of the requests occurred during the last period containing the following elements.
-    * *successfulRequestCount* (mandatory) -- The number of successful requests occurred during the last period.
-    * *unsuccessfulRequestCount* (mandatory) -- The number of unsuccessful requests occurred during the last period.
-    * *requestMinDuration* (optional) -- The minimum duration of the request in milliseconds.
-    * *requestAverageDuration* (optional) -- The average duration of the request in milliseconds.
-    * *requestMaxDuration* (optional) -- The maximum duration of the request in milliseconds.
-    * *requestDurationStdDev* (optional) -- The standard deviation of the duration of the requests.
-    * *requestMinSize* (optional) -- The minimum message size of the request in bytes.
-    * *requestAverageSize* (optional) -- The average message size of the request in bytes.
-    * *requestMaxSize* (optional) -- The maximum message size of the request in bytes.
-    * *requestSizeStdDev* (optional) -- The standard deviation of the message size of the request.
-    * *responseMinSize* (optional) -- The minimum message size of the response in bytes.
-    * *responseAverageSize* (optional) -- The average message size of the response in bytes.
-    * *responseMaxSize* (optional) -- The maximum message size of the response in bytes.
-    * *responseSizeStdDev* (optional) -- The standard deviation of the message size of the response.       
+- _monitoringStartupTimestamp_ -- The Unix timestamp in milliseconds when the monitoring system was started.
+- _statisticsPeriodSeconds_ -- Duration of the statistics period in seconds.
+- _servicesEvents_ -- Health data of all (filtered) services of the security server.
+
+The XML element _servicesEvents_ MUST contain list of items (_serviceEvents_) representing service statistics, where item contains following elements.
+
+- _service_ (mandatory) -- The service identifier.
+- _lastSuccessfulRequestTimestamp_ (optional) -- The timestamp of the last successful request (Unix timestamp in milliseconds).
+- _lastUnsuccessfulRequestTimestamp_ (optional)-- The timestamp of the last unsuccessful request (Unix timestamp in milliseconds).
+- _serviceType_ (optional) -- The type of the service.
+- _lastPeriodStatistics_ (optional) -- The statistics of the requests occurred during the last period containing the following elements.
+  - _successfulRequestCount_ (mandatory) -- The number of successful requests occurred during the last period.
+  - _unsuccessfulRequestCount_ (mandatory) -- The number of unsuccessful requests occurred during the last period.
+  - _requestMinDuration_ (optional) -- The minimum duration of the request in milliseconds.
+  - _requestAverageDuration_ (optional) -- The average duration of the request in milliseconds.
+  - _requestMaxDuration_ (optional) -- The maximum duration of the request in milliseconds.
+  - _requestDurationStdDev_ (optional) -- The standard deviation of the duration of the requests.
+  - _requestMinSize_ (optional) -- The minimum message size of the request in bytes.
+  - _requestAverageSize_ (optional) -- The average message size of the request in bytes.
+  - _requestMaxSize_ (optional) -- The maximum message size of the request in bytes.
+  - _requestSizeStdDev_ (optional) -- The standard deviation of the message size of the request.
+  - _responseMinSize_ (optional) -- The minimum message size of the response in bytes.
+  - _responseAverageSize_ (optional) -- The average message size of the response in bytes.
+  - _responseMaxSize_ (optional) -- The maximum message size of the response in bytes.
+  - _responseSizeStdDev_ (optional) -- The standard deviation of the message size of the response.
 
 The XML schema fragment of the health data response body is shown below. For clarity, documentation in the schema fragment is omitted.
 
@@ -285,12 +284,13 @@ The XML schema fragment of the health data response body is shown below. For cla
 
 The example response message is presented in \[[Annex C.4](#AnnexC.4)\].
 
-<a name="AnnexA"/></a>
+<a name="AnnexA"></a>
+
 # Annex A WSDL for Operational Monitoring Messages
 
-The XML-schema for operational monitoring messages is located in the file *src/op-monitor-daemon/core/src/main/resources/op-monitoring.xsd* of the X-Road source code.
+The XML-schema for operational monitoring messages is located in the file _src/op-monitor-daemon/src/main/resources/op-monitoring.xsd_ of the X-Road source code.
 
-The WSDL is located in the file *src/op-monitor-daemon/core/src/main/resources/op-monitoring.wsdl* of the X-Road source code.
+The WSDL is located in the file _src/op-monitor-daemon/src/main/resources/op-monitoring.wsdl_ of the X-Road source code.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -950,10 +950,11 @@ The WSDL is located in the file *src/op-monitor-daemon/core/src/main/resources/o
 </wsdl:definitions>
 ```
 
-<a name="AnnexB"/></a>
-## Annex B JSON-Schema for Payload of getSecurityServerOperationalData Response
+<a name="AnnexB"></a>
 
-The schema is located in the file *src/op-monitor-daemon/core/src/main/resources/query_operational_data_response_payload_schema.yaml* of the X-Road source code.
+# Annex B JSON-Schema for Payload of getSecurityServerOperationalData Response
+
+The schema is located in the file _src/op-monitor-daemon/src/main/resources/query_operational_data_response_payload_schema.yaml_ of the X-Road source code.
 
 ```yaml
 title: Query Operational Data Response Payload Schema
@@ -978,22 +979,22 @@ properties:
           description: Type of the security server
           type: string
           enum:
-          - Client
-          - Producer
+            - Client
+            - Producer
         requestInTs:
-          description: 'In the client''s security server: the Unix timestamp in milliseconds when the request was received by the client''s security server. In the service provider''s security server: the Unix timestamp in milliseconds when the request was received by the service provider''s security server. In both cases, the timestamp is taken just before received payload byte array is decoded and processed'
+          description: "In the client's security server: the Unix timestamp in milliseconds when the request was received by the client's security server. In the service provider's security server: the Unix timestamp in milliseconds when the request was received by the service provider's security server. In both cases, the timestamp is taken just before received payload byte array is decoded and processed"
           type: integer
           minimum: 0
         requestOutTs:
-          description: 'In the client''s security server: the Unix timestamp in milliseconds when the request was sent out from the client''s security server to the client''s information system. In the service provider''s security server: the Unix timestamp in milliseconds when the request was sent out from the service provider''s security server. In both cases, the timestamp is taken just before payload byte array is sent out with HTTP POST request'
+          description: "In the client's security server: the Unix timestamp in milliseconds when the request was sent out from the client's security server to the client's information system. In the service provider's security server: the Unix timestamp in milliseconds when the request was sent out from the service provider's security server. In both cases, the timestamp is taken just before payload byte array is sent out with HTTP POST request"
           type: integer
           minimum: 0
         responseInTs:
-          description: 'In the client''s security server: the Unix timestamp in milliseconds when the response was received by the client''s security server. In the service provider''s security server: the Unix timestamp in milliseconds when the response was received by the service provider''s security server. In both cases, the timestamp is taken just before received payload byte array is decoded and processed.'
+          description: "In the client's security server: the Unix timestamp in milliseconds when the response was received by the client's security server. In the service provider's security server: the Unix timestamp in milliseconds when the response was received by the service provider's security server. In both cases, the timestamp is taken just before received payload byte array is decoded and processed."
           type: integer
           minimum: 0
         responseOutTs:
-          description: 'In the client''s security server: the Unix timestamp in milliseconds when the response was sent out from the client''s security server to the client''s information system. In the service provider''s security server: the Unix timestamp in milliseconds when the response was sent out from the service provider''s security server. In both cases, the timestamp is taken just before payload byte array is sent out with HTTP response'
+          description: "In the client's security server: the Unix timestamp in milliseconds when the response was sent out from the client's security server to the client's information system. In the service provider's security server: the Unix timestamp in milliseconds when the response was sent out from the service provider's security server. In both cases, the timestamp is taken just before payload byte array is sent out with HTTP response"
           type: integer
           minimum: 0
         clientXRoadInstance:
@@ -1030,14 +1031,6 @@ properties:
           maxLength: 255
         serviceCode:
           description: Code of the service
-          type: string
-          maxLength: 255
-        restMethod:
-          description: Method of the rest
-          type: string
-          maxLength: 255
-        restPath:
-          description: Path of the rest
           type: string
           maxLength: 255
         serviceVersion:
@@ -1116,18 +1109,20 @@ properties:
           type: integer
           minimum: 0
         serviceType:
-            description: Type of the service WSDL, REST or OPENAPI3
-            type: string
-            minimum: 0
+          description: Type of the service WSDL, REST or OPENAPI3
+          type: string
+          minimum: 0
 required:
-- records
+  - records
 ```
 
-<a name="AnnexC"/></a>
-## Annex C Example Messages
+<a name="AnnexC"></a>
 
-<a name="AnnexC.1"/></a>
-### C.1 getSecurityServerOperationalData Request
+# Annex C Example Messages
+
+<a name="AnnexC.1"></a>
+
+## C.1 getSecurityServerOperationalData Request
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -1169,8 +1164,9 @@ required:
 </SOAP-ENV:Envelope>
 ```
 
-<a name="AnnexC.2"/></a>
-### C.2 getSecurityServerOperationalData Response
+<a name="AnnexC.2"></a>
+
+## C.2 getSecurityServerOperationalData Response
 
 ```xml
 Content-Type: multipart/related; type="text/xml"; charset=UTF-8;
@@ -1227,7 +1223,7 @@ content-id: <operational-monitoring-data.json.gz>
 --xroadfngEfgBlxyLszDaqXiFfDxVzvvlbhU--
 ```
 
-#### C.2.1 Example JSON-Payload of getSecurityServerOperationalData Response
+### C.2.1 Example JSON-Payload of getSecurityServerOperationalData Response
 
 ```json
 {
@@ -1269,8 +1265,10 @@ content-id: <operational-monitoring-data.json.gz>
   ]
 }
 ```
-<a name="AnnexC.3"/></a>
-### C.3 getSecurityServerHealthData Request
+
+<a name="AnnexC.3"></a>
+
+## C.3 getSecurityServerHealthData Request
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -1316,8 +1314,9 @@ content-id: <operational-monitoring-data.json.gz>
 </SOAP-ENV:Envelope>
 ```
 
-<a name="AnnexC.3"/></a>
-### C.4 getSecurityServerHealthData Response
+<a name="AnnexC.3"></a>
+
+## C.4 getSecurityServerHealthData Response
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

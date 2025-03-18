@@ -1,10 +1,10 @@
 # X-Road: Operational Monitoring Daemon Architecture <!-- omit in toc -->
 
-Version: 1.4  
+Version: 1.2  
 Document ID: ARC-OPMOND
 
 | Date       | Version | Description                                                         | Author           |
-|------------|---------|---------------------------------------------------------------------|------------------|
+| ---------- | ------- | ------------------------------------------------------------------- | ---------------- |
 |            | 0.5     | Initial version                                                     |                  |
 | 23.01.2017 | 0.6     | Added license text, table of contents and version history           | Sami Kallio      |
 | 02.02.2018 | 0.7     | Technology matrix moved to the ARC-TEC-file                         | Antti Luoma      |
@@ -13,8 +13,6 @@ Document ID: ARC-OPMOND
 | 12.12.2019 | 1.0     | Update appendix A.2 with the updated fields                         | Ilkka Seppälä    |
 | 25.06.2020 | 1.1     | Update section 3.3 with the instructions how to enable JMX          | Petteri Kivimäki |
 | 01.06.2023 | 1.2     | Update references                                                   | Petteri Kivimäki |
-| 02.10.2024 | 1.3     | Update schema file locations                                        | Justas Samuolis  |
-| 05.12.2024 | 1.4     | Add endpoint level statistics gathering support                     | Eneli Reimets    |
 
 ## Table of Contents <!-- omit in toc -->
 
@@ -50,7 +48,7 @@ This document is licensed under the Creative Commons Attribution-ShareAlike 3.0 
 
 ## 1 Introduction
 
-The X-Road monitoring solution is conceptually split into two parts: environmental and operational monitoring. The operational monitoring processes operational statistics (such as which services or endpoints have been called, how many times, what was the size of the response, etc.) of the security servers.
+The X-Road monitoring solution is conceptually split into two parts: environmental and operational monitoring. The operational monitoring processes operational statistics (such as which services have been called, how many times, what was the size of the response, etc.) of the security servers.
 
 This document describes the architecture of the X-Road operational monitoring daemon. It presents an overview of the components of the monitoring daemon and its interfaces.
 
@@ -71,12 +69,11 @@ See X-Road terms and abbreviations documentation \[[TA-TERMS](#Ref_TERMS)\].
 <a name="ARC-G"></a>**ARC-G** -- X-Road Architecture. Document ID: [ARC-G](../../Architecture/arc-g_x-road_arhitecture.md).  
 <a name="PR-GCONF"></a>**PR-GCONF** -- X-Road: Protocol for Downloading Configuration. Document ID: [PR-GCONF](../../Protocols/pr-gconf_x-road_protocol_for_downloading_configuration.md).  
 <a name="PR-MESS"></a>**PR-MESS** -- X-Road: Message Transport Protocol v4.0. Document ID: [PR-MESS](../../Protocols/pr-mess_x-road_message_protocol.md).  
-<a name="PR-OPMON"></a>**PR-OPMON** -- X-Road: Operational Monitoring Protocol. Document ID: [PR-OPMON](../Protocols/pr-opmon_x-road_operational_monitoring_protocol_Y-1096-2.md).   
+<a name="PR-OPMON"></a>**PR-OPMON** -- X-Road: Operational Monitoring Protocol. Document ID: [PR-OPMON](../Protocols/pr-opmon_x-road_operational_monitoring_protocol_Y-1096-2.md).  
 <a name="PR-OPMONJMX"></a>**PR-OPMONJMX** -- X-Road: Operational Monitoring JMX Protocol. Document ID: [PR-OPMONJMX](../Protocols/pr-opmonjmx_x-road_operational_monitoring_jmx_protocol_Y-1096-3.md).  
 <a name="PSQL"></a>**PSQL** -- PostgreSQL, https://www.postgresql.org/  
 <a name="ARC-TEC"></a>**ARC-TEC** -- X-Road technologies. Document ID: [ARC-TEC](../../Architecture/arc-tec_x-road_technologies.md).  
 <a name="Ref_TERMS" class="anchor"></a>**TA-TERMS** -- X-Road Terms and Abbreviations. Document ID: [TA-TERMS](../../terms_x-road_docs.md).
-
 
 ## 2 Component View
 
@@ -90,21 +87,21 @@ Technologies used in the operational monitoring daemon can be found here: [[ARC-
 
 ### 2.1 Operational Monitoring Daemon Main
 
-The operational monitoring daemon main is a standalone Java daemon application that implements the main functionality of the operational monitoring daemon.  
+The operational monitoring daemon main is a standalone Java daemon application that implements the main functionality of the operational monitoring daemon.
 
 #### 2.1.1 Operational Monitoring Database
 
-The operational monitoring database component collects operational monitoring data of the X-Road security server(s) via *store operational monitoring data* interface. Operational data is stored in a PostgreSQL [[PSQL]](#PSQL) database. Additionally operational health data statistics are updated and made available via JMXMP.
+The operational monitoring database component collects operational monitoring data of the X-Road security server(s) via _store operational monitoring data_ interface. Operational data is stored in a PostgreSQL [[PSQL]](#PSQL) database. Additionally operational health data statistics are updated and made available via JMXMP.
 
 Outdated data records are deleted periodically from the database according to the monitoring daemon configuration.
 
 #### 2.1.2 Operational Monitoring Service
 
-The operational monitoring service receives and processes operational monitoring requests via *operational monitoring query* interface. There are two requests used by the security server(s) - *get operational monitoring data* and *get operational health data*.
+The operational monitoring service receives and processes operational monitoring requests via _operational monitoring query_ interface. There are two requests used by the security server(s) - _get operational monitoring data_ and _get operational health data_.
 
-In case the sender of the *get operational monitoring data* request is a regular client, only operational monitoring data records associated with that client are returned. In case the request sender is the central monitoring client (described in the global configuration) or owner of the current security server (described in the global configuration), it has access to all the records.
+In case the sender of the _get operational monitoring data_ request is a regular client, only operational monitoring data records associated with that client are returned. In case the request sender is the central monitoring client (described in the global configuration) or owner of the current security server (described in the global configuration), it has access to all the records.
 
-For performance purposes, the operational monitoring service limits the size of the *get operational monitoring data* response message. The maximum response size is configurable (however, all the records having the same timestamp as the last queried record are still included into the response). In case some queried records still do not fit into the response, the timestamp of the first excluded record is returned in the response to indicate overflow.
+For performance purposes, the operational monitoring service limits the size of the _get operational monitoring data_ response message. The maximum response size is configurable (however, all the records having the same timestamp as the last queried record are still included into the response). In case some queried records still do not fit into the response, the timestamp of the first excluded record is returned in the response to indicate overflow.
 
 ### 2.2 Configuration Client
 
@@ -135,12 +132,12 @@ The monitoring of the security servers is not the main functionality of the X-Ro
 This interface is used by a local monitoring system (e.g. Zabbix) to gather local operational health data of the security server via JMXMP. The interface is described in more detail in [[PR-OPMONJMX]](#PR-OPMONJMX).
 
 With the default configuration, JMX is disabled. JMX is enabled by adding the required configuration in `/etc/xroad/services/local.properties` file. The file is opened for editing and changes are made on the `XROAD_OPMON_PARAMS` variable value. After the `XROAD_OPMON_PARAMS` variable value has been updated, the `xroad-opmonitor` service must be restarted.
-                                                 
+
 The example configuration below enables JMX, binds it to port `9011` on any available interface with SSL and password authentication enabled:
- 
- ```bash
+
+```bash
 XROAD_OPMON_PARAMS=-Djava.rmi.server.hostname=0.0.0.0 -Dcom.sun.management.jmxremote.port=9011 -Dcom.sun.management.jmxremote.authenticate=true -Dcom.sun.management.jmxremote.ssl=true
- ```
+```
 
 The monitoring of the security servers is not the main functionality of the X-Road system, therefore the availability and responsiveness of this service is not paramount.
 
@@ -156,21 +153,21 @@ The interface is described in more detail in [[ARC-G]](#ARC-G) and [[PR-GCONF]]
 
 Figure 2 shows the deployment diagram.
 
-![Operational monitoring daemon deployment diagram](x-road_operational_monitoring_daemon_deployment.png)
+<img src="./x-road_operational_monitoring_daemon_deployment.png" width="40%" />
 
 **Figure 2. Operational monitoring daemon deployment**
 
+<a name="AppendixA"></a>
 
-<a name="AppendixA"/></a>
 ## Appendix A Store Operational Monitoring Data Messages
 
 ### A.1 JSON-Schema for Store Operational Monitoring Data Request
 
-The schema is located in the file *src/op-monitor-daemon/core/src/main/resources/store_operational_data_request_schema.yaml* of the X-Road source code.
+The schema is located in the file _src/op-monitor-daemon/src/main/resources/store_operational_data_request_schema.yaml_ of the X-Road source code.
 
 ### A.2 Example Store Operational Monitoring Data Request
 
-The first record of the store request reflects successfully mediated SOAP request, the second one successfully mediated REST request and the third one unsuccessfully mediated request.
+The first record of the store request reflects successfully mediated request, the second one unsuccessfully mediated request.
 
 ```json
 {
@@ -208,38 +205,6 @@ The first record of the store request reflects successfully mediated SOAP reques
       "serviceType": "WSDL"
     },
     {
-      "monitoringDataTs": 1733404603,
-      "securityServerInternalIp": "fd42:2642:2cb3:31ac:216:3eff:fedf:85c%eth0",
-      "securityServerType": "Client",
-      "requestInTs": 1733404602876,
-      "requestOutTs": 1733404602884,
-      "responseInTs": 1733404602970,
-      "responseOutTs": 1733404603005,
-      "clientXRoadInstance": "FI",
-      "clientMemberClass": "COM",
-      "clientMemberCode": "111",
-      "clientSubsystemCode": "CLIENT",
-      "serviceXRoadInstance": "FI",
-      "serviceMemberClass": "COM",
-      "serviceMemberCode": "111",
-      "serviceSubsystemCode": "SERVICE",
-      "serviceCode": "pets",
-      "restMethod": "GET",
-      "restPath": "/cat",
-      "messageId": "1234",
-      "messageProtocolVersion": "1",
-      "clientSecurityServerAddress": "ss1",
-      "serviceSecurityServerAddress": "ss1",
-      "requestSize": 214,
-      "responseSize": 462,
-      "requestAttachmentCount": 0,
-      "responseAttachmentCount": 0,
-      "succeeded": true,
-      "statusCode": 200,
-      "xRequestId": "1244d018-9300-4f1b-8c2b-9b7f2bc4e933",
-      "serviceType": "REST"
-    },
-    {
       "monitoringDataTs": 1576134508,
       "securityServerInternalIp": "fd42:2642:2cb3:31ac:216:3eff:fedf:85c%eth0",
       "securityServerType": "Client",
@@ -266,18 +231,18 @@ The first record of the store request reflects successfully mediated SOAP reques
       "faultString": "Missing required subsystem code",
       "xRequestId": "2c51b181-47cd-4ff2-b5df-6463f968fd0c",
       "serviceType": "WSDL"
-    }   
+    }
   ]
 }
 ```
 
 ### A.3 JSON-Schema for Store Operational Monitoring Data Response
 
-The schema is located in the file *src/op-monitor-daemon/core/src/main/resources/store_operational_data_response_schema.yaml* of the X-Road source code.
+The schema is located in the file _src/op-monitor-daemon/src/main/resources/store_operational_data_response_schema.yaml_ of the X-Road source code.
 
 ### A.4 Example Store Operational Monitoring Data Responses
 
-* Example of response indicating success.
+- Example of response indicating success.
 
 ```json
 {
@@ -285,7 +250,7 @@ The schema is located in the file *src/op-monitor-daemon/core/src/main/resources
 }
 ```
 
-* Example of response indicating failure.
+- Example of response indicating failure.
 
 ```json
 {

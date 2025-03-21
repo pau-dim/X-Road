@@ -1,6 +1,6 @@
 # X-Road: Central Server User Guide <!-- omit in toc -->
 
-Version: 2.47  
+Version: 2.48  
 Doc. ID: UG-CS
 
 ## Version history <!-- omit in toc -->
@@ -73,6 +73,7 @@ Doc. ID: UG-CS
 | 01.08.2024 | 2.45    | Minor updates                                                                                                                                                                                                                                                                                                                                                                                                                           | Petteri Kivimäki     |
 | 08.01.2025 | 2.46    | Minor updates                                                                                                                                                                                                                                                                                                                                                                                                                           | Raido Kaju           |
 | 15.01.2025 | 2.47    | Minor updates                                                                                                                                                                                                                                                                                                                                                                                                                           | Petteri Kivimäki     |
+| 21.03.2025 | 2.48    | Syntax and styling                                                                                                                                                                                                                                                                                                                                                                                                                      | Pauline Dimmek       |
 
 ## Table of Contents <!-- omit in toc -->
 

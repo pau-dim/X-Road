@@ -60,7 +60,7 @@ This protocol builds on existing transport and message encoding mechanisms. Ther
 
 The low-level technical details of the operational monitoring services are specified using the WSDL \[[WSDL](#WSDL)\] syntax. See \[[Annex A](#AnnexA)\] for operational monitoring services WSDL file.
 
-Chapters 2 and 3 together with annexes \[[Annex A](#AnnexA)\] and \[[Annex B]()\] contain normative information. All the other sections are informative in nature. All the references are normative.
+Chapters 2 and 3 together with annexes \[[Annex A](#AnnexA)\] and \[[Annex B]\] contain normative information. All the other sections are informative in nature. All the references are normative.
 
 This specification does not include option for partially implementing the protocol – the conformant implementation must implement the entire specification.
 
@@ -132,7 +132,7 @@ The body of the request MUST contain an XML element *getSecurityServerOperationa
  * *statusCode*
  
 
-The fields are described in the JSON-schema of the response payload \[[Annex B]()\].
+The fields are described in the JSON-schema of the response payload \[[Annex B\].
 
 The XML schema fragment of the operational data request body is shown below. For clarity, documentation in the schema fragment is omitted.
 
@@ -169,7 +169,7 @@ The response MUST be MIME multipart message with attachment using swaRef \[[SWAR
 
  The content type of this part MUST be *text/xml*.
 
-2. Operational data (payload). This MIME part MUST contain queried operational data records in JSON format and compressed (GZIP \[[RFC1952](#RFC1952)\]) . The content type of this part MUST be *application/gzip*. The JSON-Schema for payload is described in \[[Annex B]()\].
+2. Operational data (payload). This MIME part MUST contain queried operational data records in JSON format and compressed (GZIP \[[RFC1952](#RFC1952)\]) . The content type of this part MUST be *application/gzip*. The JSON-Schema for payload is described in \[[Annex B]\].
 
 The XML schema fragment of the operational data response body is shown below. For clarity, documentation in the schema fragment is omitted.
 

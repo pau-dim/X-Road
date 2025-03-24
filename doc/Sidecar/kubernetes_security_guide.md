@@ -266,7 +266,7 @@ You can access Dashboard using the kubectl command-line tool by running the foll
 kubectl -n kubernetes-dashboard port-forward svc/kubernetes-dashboard-kong-proxy 4433:443
 ```
 
-Kubectl will make Dashboard available at <https://localhost:4433>.
+Kubectl will make Dashboard available at .
 
 In the login view, you will be required to enter a token. To try out Kubernetes Dashboard you can [create a sample user](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md) and get the token with the following command:
 
